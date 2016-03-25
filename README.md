@@ -5,32 +5,55 @@
 설정 파일입니다.
 ```php
 $plasma_config['mysql'] = array(
+	host => '데이터베이스 서버 호스트',
 	database => '데이터베이스 명',
 	username => '데이터베이스 아이디',
 	password => '데이터베이스 비밀번호'
 );
 ```
 
-## init-database.php
-데이터베이스를 초기화 하는 코드입니다. 최초 1회 혹은 `plasma-game-api`를 업데이트 할 때 실행해 줍니다.
+## init.php
+데이터베이스를 초기화 하는 코드입니다. 웹 브라우저 등에서 최초 1회 혹은 `plasma-game-api`를 업데이트 할 때 접속해 줍니다.
 ```
-http://example.com/plasma-game-api/init-database.php
+http://example.com/plasma-game-api/init.php
 ```
 
-## save-ranking.php
+## ranking/save.php
 랭킹을 저장합니다.
+
+#### GameMaker: Studio 예제
 ```
-http://example.com/plasma-game-api/save-ranking.php?json=인코딩된 JSON 문자열
+var name = get_string('이름을 입력하세요. (영문)', '');
+var point = 100;
+
+if (name != '') {
+    save_ranking = http_post_string('http://example.com/plasma-game-api/ranking/save.php', 'name=' + name + '&point=' + string(point));
+}
+```
+이후 HTTP 이벤트로 랭킹을 받아옵니다.
+```
+if (ds_map_find_value(async_load, 'id') == save_ranking) {
+    if (ds_map_find_value(async_load, 'status') == 0) {
+        show_message('당신의 랭킹은 ' + ds_map_find_value(async_load, 'result') + '등 입니다.');
+    }
+}
 ```
 
-## get-ranking.php
-랭킹을 가져옵니다.
+## ranking/list.php
+랭킹 목록을 가져옵니다.
 
-## save-data.php
-데이터를 저장합니다.
-
-## get-data.php
-데이터를 가져옵니다.
+#### GameMaker: Studio 예제
+```
+load_ranking = http_get('http://plasma.pe.hu/dung/plasma-game-api/ranking/list.php?count=6');
+```
+이후 HTTP 이벤트로 랭킹을 받아옵니다.
+```
+if (ds_map_find_value(async_load, 'id') == load_ranking) {
+    if (ds_map_find_value(async_load, 'status') == 0) {
+        ranking_list = ds_map_find_value(json_decode(ds_map_find_value(async_load, 'result')), 'list');
+    }
+}
+```
 
 ## 라이센스
 [MIT 라이센스](LICENSE)
