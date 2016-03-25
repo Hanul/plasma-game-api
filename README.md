@@ -44,7 +44,7 @@ if (ds_map_find_value(async_load, 'id') == save_ranking) {
 
 #### GameMaker: Studio 예제
 ```
-load_ranking = http_get('http://plasma.pe.hu/dung/plasma-game-api/ranking/list.php?count=6');
+load_ranking = http_get('http://example.com/dung/plasma-game-api/ranking/list.php?count=6');
 ```
 이후 HTTP 이벤트로 랭킹을 받아옵니다.
 ```
