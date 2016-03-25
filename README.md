@@ -56,5 +56,7 @@ if (ds_map_find_value(async_load, 'id') == load_ranking) {
 ```
 
 ## 라이센스
-[MIT 라이센스](LICENSE)
+[MIT](LICENSE)
 
+## 작성자
+[Young Jae Sim](https://github.com/Hanul)
