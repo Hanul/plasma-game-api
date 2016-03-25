@@ -8,4 +8,4 @@ mysql_insert('INSERT INTO ranking VALUES (NULL, "'.$_POST['name'].'", '.$_POST['
 
 header('Access-Control-Allow-Origin: *');
 
-echo mysql_get_one('SELECT COUNT(*) AS count FROM ranking WHERE point >= '.$_POST['point'])->count;
+echo mysql_get_one('SELECT COUNT(*) AS count FROM ranking WHERE point > '.$_POST['point'])->count + 1;
