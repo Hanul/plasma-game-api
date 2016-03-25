@@ -43,6 +43,7 @@ if (ds_map_find_value(async_load, 'id') == save_ranking) {
 랭킹 목록을 가져옵니다.
 
 #### GameMaker: Studio 예제
+뒤의 count=6을 변경하여 몇 개를 가져올지 지정합니다. 최대 1000개를 가져올 수 있습니다.
 ```
 load_ranking = http_get('http://example.com/dung/plasma-game-api/ranking/list.php?count=6');
 ```
