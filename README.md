@@ -4,6 +4,8 @@
 ## config.php
 설정 파일입니다.
 ```php
+$plasma_config['secure_key'] = '보안 키';
+
 $plasma_config['mysql'] = array(
 	host => '데이터베이스 서버 호스트',
 	database => '데이터베이스 명',
@@ -23,18 +25,25 @@ http://example.com/plasma-game-api/init.php
 
 #### GameMaker: Studio 예제
 ```
+var secure_key = '보안 키';
+
 var name = get_string('이름을 입력하세요. (영문)', '');
 var point = 100;
 
 if (name != '') {
-    save_ranking = http_post_string('http://example.com/plasma-game-api/ranking/save.php', 'name=' + name + '&point=' + string(point));
+    save_ranking = http_post_string('http://example.com/plasma-game-api/ranking/save.php', 'name=' + name + '&point=' + string(point) + '&key=' + sha1_string_utf8(secure_key + name + string(point)));
 }
 ```
-이후 HTTP 이벤트로 랭킹을 받아옵니다.
+이후 HTTP 이벤트로 랭킹을 받아옵니다. 랭킹이 -1 이면 오류가 발생한 것입니다. 보안 키를 확인해보시기 바랍니다.
 ```
 if (ds_map_find_value(async_load, 'id') == save_ranking) {
     if (ds_map_find_value(async_load, 'status') == 0) {
-        show_message('당신의 랭킹은 ' + ds_map_find_value(async_load, 'result') + '등 입니다.');
+    	var ranking = real(ds_map_find_value(async_load, 'result'));
+    	if (ranking == -1) {
+    		show_message('오류가 발생하였습니다.');
+    	} else {
+        	show_message('당신의 랭킹은 ' + string(ranking) + '등 입니다.');
+       }
     }
 }
 ```
