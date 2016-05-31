@@ -119,6 +119,23 @@ if (ds_map_find_value(async_load, 'id') == get_data) {
 }
 ```
 
+## data/find.php
+특정인이 작성한 데이터 목록을 가져옵니다.
+
+#### GameMaker: Studio 예제
+뒤의 `who=someone` 및 `count=6`을 변경하여, 어떤이의 데이터를 몇 개 가져올지 지정합니다. 최대 1000개를 가져올 수 있습니다.
+```
+find_data = http_get('http://example.com/plasma-game-api/data/find.php?who=someone&count=6');
+```
+이후 HTTP 이벤트로 랭킹을 받아옵니다.
+```
+if (ds_map_find_value(async_load, 'id') == find_data) {
+    if (ds_map_find_value(async_load, 'status') == 0) {
+        data_list = ds_map_find_value(json_decode(ds_map_find_value(async_load, 'result')), 'list');
+    }
+}
+```
+
 ## 라이센스
 [MIT](LICENSE)
 
