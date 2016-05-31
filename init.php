@@ -6,10 +6,17 @@ include 'lib/mysql/mysql_run_query.php';
 mysql_run_query('CREATE TABLE ranking(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
 )');
-
 mysql_run_query('ALTER TABLE ranking ADD COLUMN name VARCHAR(20) NOT NULL');
 mysql_run_query('ALTER TABLE ranking ADD COLUMN point INT NOT NULL');
 mysql_run_query('ALTER TABLE ranking ADD COLUMN time DATETIME NOT NULL');
+
+mysql_run_query('CREATE TABLE data(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+)');
+mysql_run_query('ALTER TABLE data ADD COLUMN who VARCHAR(20) NULL');
+mysql_run_query('ALTER TABLE data ADD COLUMN name VARCHAR(20) NOT NULL');
+mysql_run_query('ALTER TABLE data ADD COLUMN data LONGTEXT NOT NULL');
+mysql_run_query('ALTER TABLE data ADD COLUMN time DATETIME NOT NULL');
 
 ?>
 <!doctype html>

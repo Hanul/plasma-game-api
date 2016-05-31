@@ -12,9 +12,13 @@ include '../lib/mysql/mysql_get_one.php';
 
 if ($_POST['key'] == sha1($plasma_config['secure_key'].$_POST['name'])) {
 	
-	mysql_insert('INSERT INTO ranking VALUES (NULL, "'.$_POST['name'].'", '.$_POST['point'].', NOW())');
+	if ($_POST['who'] == null) {
+		$id = mysql_insert('INSERT INTO data VALUES (NULL, NULL, "'.$_POST['name'].'", "'.$_POST['data'].'", NOW())');
+	} else {
+		$id = mysql_insert('INSERT INTO data VALUES (NULL, "'.$_POST['who'].'", "'.$_POST['name'].'", "'.$_POST['data'].'", NOW())');
+	}
 	
-	echo mysql_get_one('SELECT COUNT(*) AS count FROM ranking WHERE point > '.$_POST['point'])->count + 1;
+	echo $id;
 }
 
 else {
